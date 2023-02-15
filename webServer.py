@@ -8,8 +8,8 @@ def webServer(port=13331):
     serverSocket = socket(AF_INET, SOCK_STREAM)
 
     # Prepare a server socket
-    serverSocket.bind(("", port))
-
+    serverSocket.bind(("192.168.5.186", port))
+    #192.168.5.186
     # Fill in start
     serverSocket.listen(1)
     # Fill in end
@@ -29,7 +29,7 @@ def webServer(port=13331):
             # Plenty of guidance online on how to open and read a file in python. How should you read it though if you plan on sending it through a socket?
             f = open(filename[1:], "b")  
             
-            outputdata = f.read()
+            outputdata = f.readlines()
             #print(outputdata)
 
             #outputdata=b"Content-Type: text/html; charset=UTF-8\r\n"
