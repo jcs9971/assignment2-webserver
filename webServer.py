@@ -27,14 +27,14 @@ def webServer(port=13331):
             # #Fill in end
             filename = message.split()[1]
 
-            print(filename)
+            #print(filename)
 
             # opens the client requested file.
             # Plenty of guidance online on how to open and read a file in python. How should you read it though
             # if you plan on sending it through a socket?
-            f = open(filename[1:], "b")
+            f = open(filename[1:])
 
-            outputdata = f.readlines()
+            outputdata = f.read()
             #print(outputdata)
 
             # outputdata=b"Content-Type: text/html; charset=UTF-8\r\n"
@@ -43,13 +43,13 @@ def webServer(port=13331):
             # that is ok?
             # Note that a complete header must end with a blank line, creating the four-byte sequence "\r\n\r\n"
             # Refer to https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/TCPSockets.html
-            connectionSocket.send("HTTP/1.1 200 OK\r\n".encode())
+            connectionSocket.send("HTTP/1.1 200 OK\r\n\r\n".encode())
 
             # Send the content of the requested file to the client
             for i in f:  # for line in file
                 # Fill in start - send your html file contents #Fill in end
                 connectionSocket.send(outputdata[i])
-            connectionSocket.send("\r\n".encode())
+            connectionSocket.send("\r\n")
 
             connectionSocket.close()
             # fill in end
@@ -58,8 +58,6 @@ def webServer(port=13331):
         except Exception as e:
             connectionSocket.send("\nHTTP/1.1 404 Not Found\n\n".encode())
             connectionSocket.close()
-
-    print(e)
 
     # Send response message for invalid request due to the file not being found (404)
     # Fill in start
